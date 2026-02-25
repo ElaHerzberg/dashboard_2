@@ -1,0 +1,38 @@
+body {
+font-family: Arial;
+direction: rtl;
+margin: 40px;
+background-color: #f5f7fa;
+}
+
+h1 {
+text-align: center;
+}
+
+.kpi-container {
+display: flex;
+justify-content: space-around;
+margin-bottom: 40px;
+}
+
+.kpi {
+background: white;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+text-align: center;
+width: 200px;
+}
+
+canvas {
+background: white;
+padding: 20px;
+border-radius: 12px;
+margin-bottom: 20px;
+}
+
+.insight {
+background: #fff3cd;
+padding: 10px;
+border-radius: 8px;
+}

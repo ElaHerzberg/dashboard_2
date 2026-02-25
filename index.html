@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard – מדריכים</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<h1>דשבורד תהליך מיון מדריכים</h1>
+
+<section class="kpi-container">
+  <div class="kpi" id="total"></div>
+  <div class="kpi" id="accepted"></div>
+  <div class="kpi" id="mismatch"></div>
+</section>
+
+<h2>Funnel תהליך מיון</h2>
+<canvas id="funnelChart"></canvas>
+<p class="insight">
+האיבוד המשמעותי מתרחש בין המבחן לראיון הטכנולוגי – מעיד על פער עומק שלא מזוהה במבחן.
+</p>
+
+<h2>פער החלטה ידנית ↔ מסלול בפועל</h2>
+<canvas id="mismatchChart"></canvas>
+
+<h2>סיבות נפילה – ראיון טכנולוגי</h2>
+<canvas id="techChart"></canvas>
+
+<h2>סיבות נפילה – ראיון הדרכתי</h2>
+<canvas id="pedChart"></canvas>
+
+<script>
+fetch("data.json")
+.then(res => res.json())
+.then(data => {
+
+document.getElementById("total").innerHTML = 
+`<h3>${data.kpis.total}</h3><p>סה"כ מועמדים</p>`;
+
+document.getElementById("accepted").innerHTML = 
+`<h3>${data.kpis.accepted}</h3><p>התקבלו</p>`;
+
+document.getElementById("mismatch").innerHTML = 
+`<h3>${data.kpis.mismatch}</h3><p>אי התאמה במסלול</p>`;
+
+// Funnel
+new Chart(document.getElementById("funnelChart"), {
+type: "bar",
+data: {
+labels: ["מבחן","עברו מבחן","ראיון טכנולוגי","ראיון הדרכתי","התקבלו"],
+datasets: [{
+data: data.funnel,
+backgroundColor: "#4CAF50"
+}]
+},
+options: { responsive:true }
+});
+
+// Mismatch
+new Chart(document.getElementById("mismatchChart"), {
+type: "pie",
+data: {
+labels: ["תואם","הועלה רמה","הורד רמה"],
+datasets: [{
+data: [
+data.decisionMismatch.match,
+data.decisionMismatch.upgraded,
+data.decisionMismatch.downgraded
+],
+backgroundColor: ["#4CAF50","#FF9800","#F44336"]
+}]
+}
+});
+
+// Tech failures
+new Chart(document.getElementById("techChart"), {
+type: "bar",
+data: {
+labels: ["פער מקצועי","חוסר עומק","בלבול מושגים"],
+datasets: [{
+data: Object.values(data.techFailures),
+backgroundColor: "#2196F3"
+}]
+}
+});
+
+// Ped failures
+new Chart(document.getElementById("pedChart"), {
+type: "bar",
+data: {
+labels: ["הסבר מבולגן","חוסר מבנה","חוסר התאמה ללומד"],
+datasets: [{
+data: Object.values(data.pedFailures),
+backgroundColor: "#9C27B0"
+}]
+}
+});
+
+});
+</script>
+</body>
+</html>

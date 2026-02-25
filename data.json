@@ -1,0 +1,26 @@
+{
+  "kpis": {
+    "total": 224,
+    "passed_test": 137,
+    "tech_interview": 85,
+    "ped_interview": 65,
+    "accepted": 52,
+    "mismatch": 12
+  },
+  "funnel": [224,137,85,65,52],
+  "decisionMismatch": {
+    "match": 212,
+    "upgraded": 6,
+    "downgraded": 6
+  },
+  "techFailures": {
+    "professional_gap": 28,
+    "lack_depth": 17,
+    "concept_confusion": 22
+  },
+  "pedFailures": {
+    "messy_explanation": 31,
+    "no_structure": 19,
+    "no_adaptation": 15
+  }
+}
