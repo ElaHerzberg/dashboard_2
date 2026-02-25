@@ -98,7 +98,56 @@ backgroundColor: "#9C27B0"
 }
 });
 
+
+
 });
+
+
+</script>
+
+<h2>💰 סימולציית חיסכון בזמן ראיונות</h2>
+
+<div class="simulation-box">
+  <label>אחוז מועמדים שניתן היה לסנן מוקדם: 
+    <span id="percentValue">20</span>%
+  </label>
+  <input type="range" min="0" max="50" value="20" id="percentSlider">
+
+  <div class="results">
+    <p>סה"כ דקות נחסכות: <strong id="minutesSaved"></strong></p>
+    <p>סה"כ שעות נחסכות: <strong id="hoursSaved"></strong></p>
+    <p>ימי עבודה (8 שעות): <strong id="daysSaved"></strong></p>
+  </div>
+</div>
+<script>
+
+const techDuration = 45;
+const pedDuration = 45;
+const interviewsPerCandidate = techDuration + pedDuration;
+
+const candidatesInterviewed = 85; // עדכני אם צריך
+
+const slider = document.getElementById("percentSlider");
+const percentValue = document.getElementById("percentValue");
+
+function calculateSavings(percent) {
+  const filtered = candidatesInterviewed * (percent/100);
+  const minutes = filtered * interviewsPerCandidate;
+  const hours = minutes / 60;
+  const days = hours / 8;
+
+  document.getElementById("minutesSaved").innerText = Math.round(minutes);
+  document.getElementById("hoursSaved").innerText = hours.toFixed(1);
+  document.getElementById("daysSaved").innerText = days.toFixed(1);
+}
+
+slider.addEventListener("input", function() {
+  percentValue.innerText = this.value;
+  calculateSavings(this.value);
+});
+
+calculateSavings(slider.value);
+
 </script>
 </body>
 </html>
